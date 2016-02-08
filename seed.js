@@ -71,7 +71,7 @@ mongoose.connection.on('open', function() {
     }).then(function() {
       console.log("Finished inserting data");
     }, console.log).then(function() {
-      mongoose.connection.close()
+      mongoose.connection.close();
     });
 
   });
