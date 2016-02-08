@@ -18,8 +18,8 @@ var daysModule = (function(){
 
   // Day class and setup
 
-  function Day () {
-    this.hotel = null;
+  function Day (data) {
+    this.hotel = data.hotel || null;
     this.restaurants = [];
     this.activities = [];
     this.number = days.push(this);
@@ -84,9 +84,9 @@ var daysModule = (function(){
     $removeButton.on('click', deleteCurrentDay);
   });
 
-  function addDay () {
+  function addDay (data) {
     if (this && this.blur) this.blur(); // removes focus box from buttons
-    var newDay = new Day();
+    var newDay = new Day(data);
     if (days.length === 1) currentDay = newDay;
     newDay.switchTo();
   }
