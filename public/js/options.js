@@ -11,6 +11,7 @@ $(function(){
   activities.forEach(makeOption, $optionsPanel.find('#activity-choices'));
 
   function makeOption (dbAttraction) {
+    console.log("making option for",dbAttraction);
     dbAttraction.type = this.data('type');
     var attraction = attractionsModule.create(dbAttraction);
     var $option = $('<option></option>')

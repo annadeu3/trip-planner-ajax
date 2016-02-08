@@ -21,7 +21,8 @@ var daysModule = (function(){
 
   function Day (data) {
     console.log("adding day",data)
-    this.hotel = (data.hotel || null);
+    // this.hotel = (data.hotel || null);
+    this.hotel = attractionsModule.create(data.hotel || null);
     this.restaurants = (data.restaurants || []);
     this.activities = (data.activities || []);
     this.number = days.push(this); //? 
@@ -55,6 +56,7 @@ var daysModule = (function(){
   // day switching
 
   Day.prototype.switchTo = function () {
+    console.log("current day in switchto is",currentDay)
     currentDay.hide();
     currentDay = this;
     currentDay.draw();
@@ -92,11 +94,17 @@ var daysModule = (function(){
   function addDay (data) {
     if (this && this.blur) this.blur(); // removes focus box from buttons
 
-    for(var i = 0; i < data.length; i++) {
-      var newDay = new Day(data[i]);
-    }
+    // for(var i = 0; i < data.length; i++) {
+      // var newDay = new Day(data[i]);
+    // }
 
-    if (days.length === 1) currentDay = newDay;
+    var newDay = new Day(data);
+
+    if (days.length === 1)  {
+      console.log("setting current day");
+      console.log("new day is ", newDay);
+      currentDay = newDay;
+    }
     newDay.switchTo();
   }
 
@@ -127,17 +135,17 @@ var daysModule = (function(){
 
               console.log("AJAX success", responseData)
 
-              addDay(responseData)
+              // addDay(responseData)
 
-              // if (responseData.length > 0) {
-                // console.log("****** responsedata length is",responseData.length);
-                // for (var i= 0; i < responseData.length; i++){
-                // console.log("********* ADDING A DAY",i)
-                  // addDay(responseData[i]);
-                // }
-              // } else {
-                // addDay({});
-              // }
+              if (responseData.length > 0) {
+                console.log("****** responsedata length is",responseData.length);
+                for (var i= 0; i < responseData.length; i++){
+                console.log("********* ADDING A DAY",i)
+                  addDay(responseData[i]);
+                }
+              } else {
+                addDay({});
+              }
           },
           error: function (errorObj) {
               console.error(errorObj)
@@ -149,7 +157,7 @@ var daysModule = (function(){
       // adding to the day object
       switch (attraction.type) {
         case 'hotel':
-          if (currentDay.hotel) currentDay.hotel.delete();
+          if (currentDay.hotel) currentDay.hotel.delete(); // check attraction prototype for corret method
           currentDay.hotel = attraction; break;
         case 'restaurant':
           utilsModule.pushUnique(currentDay.restaurants, attraction); break;
