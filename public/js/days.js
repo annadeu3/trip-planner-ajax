@@ -22,12 +22,18 @@ var daysModule = (function(){
   function Day (data) {
     console.log("adding day",data)
     // this.hotel = (data.hotel || null);
-    this.hotel = attractionsModule.create(data.hotel || null);
+    this.hotel = createDayAttraction(data.hotel, 'hotel'); //(data.hotel || null);
     this.restaurants = (data.restaurants || []);
     this.activities = (data.activities || []);
     this.number = days.push(this); //? 
     this.buildButton().drawButton();
     console.log("testing if THIS is populated",this)
+  }
+
+  function createDayAttraction(data,type) {
+    var anAttraction = attractionsModule.create(data);
+    anAttraction.type = type;
+    return anAttraction;
   }
 
   Day.prototype.buildButton = function() {
