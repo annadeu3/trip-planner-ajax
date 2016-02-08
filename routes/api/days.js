@@ -1,19 +1,43 @@
 var express = require('express');
 var router = express.Router();
+var models = require('../../models');
+var Hotel = models.Hotel;
+var Restaurant = models.Restaurant;
+var Activity = models.Activity;
+var Promise = require('bluebird');
+var Day = models.Day;
 
-router.post('/api/days', function(req, res, next){
+router.get('/api/days', function(req, res, next){
+	Day.find()
+	.then(function(data){
+		console.log("this is data: ", data);
+	})
+	.then(null, next);
 	console.log("placeholder to get all days");
 });
 
 router.get('/api/days/:id', function(req, res, next){
+	Day.findById(req.params.id)
+	.then(function(data){
+		console.log('Success!!!', data.hotel);
+	})
+	.then(null, next);
 	console.log("placeholder to get a specific day");
 });
 
-router.get('/api/days/:id/delete', function(req, res, next){
+router.delete('/api/days/:id/delete', function(req, res, next){
 	console.log("placeholder to delete a day");
 });
 
-router.get('/api/days/add', function(req, res, next){
+router.post('/api/days', function(req, res, next){
+	Day.count({})
+	.then(function(count){
+		Day.create({number: count + 1 
+		});
+	})
+	.then(function(data) {
+		console.log('Success!', data);
+	}).then(null, next);
 	console.log("placeholder to add a day");
 });
 

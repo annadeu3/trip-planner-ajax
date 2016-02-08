@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var PlaceSchema = require('./place').schema;
 
+
 var DaySchema = new mongoose.Schema({
   number: Number,
   hotel: {type: mongoose.Schema.Types.ObjectId, ref: 'Hotel'},
