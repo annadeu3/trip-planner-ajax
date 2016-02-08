@@ -7,10 +7,13 @@ var Activity = models.Activity;
 var Promise = require('bluebird');
 var Day = models.Day;
 
+
+
 router.get('/api/days', function(req, res, next){
 	Day.find()
 	.then(function(data){
-		console.log("this is data: ", data);
+		 res.json(data);
+		//test.hello(data);
 	})
 	.then(null, next);
 	console.log("placeholder to get all days");

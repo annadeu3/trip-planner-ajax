@@ -9,6 +9,7 @@ var daysModule = (function(){
   // jQuery selections
 
   var $dayButtons, $dayTitle, $addButton, $removeButton;
+  
   $(function(){
     $dayButtons = $('.day-buttons');
     $dayTitle = $('#day-title > span');
@@ -20,13 +21,14 @@ var daysModule = (function(){
 
   function Day (data) {
     this.hotel = data.hotel || null;
-    this.restaurants = [];
-    this.activities = [];
-    this.number = days.push(this);
+    this.restaurants = data.restaurants || [];
+    this.activities = data.activities || [];
+    this.number = days.push(this); //? 
     this.buildButton().drawButton();
   }
 
   Day.prototype.buildButton = function() {
+    console.log("building button");
     this.$button = $('<button class="btn btn-circle day-btn"></button>')
       .text(this.number);
     var self = this;
@@ -38,6 +40,7 @@ var daysModule = (function(){
   };
 
   Day.prototype.drawButton = function() {
+    console.log('drawing button')
     this.$button.appendTo($dayButtons);
     return this;
   };
@@ -109,7 +112,25 @@ var daysModule = (function(){
   var methods = {
 
     load: function(){
-      $(addDay);
+      // $(addDay);
+
+      $.ajax({
+          method: 'GET',
+          url: '/api/days',
+          success: function (responseData) {
+              console.log("success", responseData)
+              if (responseData.length > 0) {
+                for (var i= 0; i< responseData.length; i++){
+                  addDay(responseData[i]);
+                }
+              } else {
+                addDay({});
+              }
+          },
+          error: function (errorObj) {
+              console.error(err)
+          }
+      });
     },
 
     addAttraction: function(attraction){
