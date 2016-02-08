@@ -20,11 +20,13 @@ var daysModule = (function(){
   // Day class and setup
 
   function Day (data) {
-    this.hotel = data.hotel || null;
-    this.restaurants = data.restaurants || [];
-    this.activities = data.activities || [];
+    console.log("adding day",data)
+    this.hotel = (data.hotel || null);
+    this.restaurants = (data.restaurants || []);
+    this.activities = (data.activities || []);
     this.number = days.push(this); //? 
     this.buildButton().drawButton();
+    console.log("testing if THIS is populated",this)
   }
 
   Day.prototype.buildButton = function() {
@@ -89,7 +91,11 @@ var daysModule = (function(){
 
   function addDay (data) {
     if (this && this.blur) this.blur(); // removes focus box from buttons
-    var newDay = new Day(data);
+
+    for(var i = 0; i < data.length; i++) {
+      var newDay = new Day(data[i]);
+    }
+
     if (days.length === 1) currentDay = newDay;
     newDay.switchTo();
   }
@@ -118,17 +124,23 @@ var daysModule = (function(){
           method: 'GET',
           url: '/api/days',
           success: function (responseData) {
-              console.log("success", responseData)
-              if (responseData.length > 0) {
-                for (var i= 0; i< responseData.length; i++){
-                  addDay(responseData[i]);
-                }
-              } else {
-                addDay({});
-              }
+
+              console.log("AJAX success", responseData)
+
+              addDay(responseData)
+
+              // if (responseData.length > 0) {
+                // console.log("****** responsedata length is",responseData.length);
+                // for (var i= 0; i < responseData.length; i++){
+                // console.log("********* ADDING A DAY",i)
+                  // addDay(responseData[i]);
+                // }
+              // } else {
+                // addDay({});
+              // }
           },
           error: function (errorObj) {
-              console.error(err)
+              console.error(errorObj)
           }
       });
     },

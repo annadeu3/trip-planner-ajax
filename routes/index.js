@@ -27,8 +27,8 @@ router.get('/test', function(req, res) {
   Day.count({})
   .then(function(count){
     Day.create(
-      {number: count + 1 , hotel: "56b8b8534b71fbd20e6d5d73", restaurants: ["56b8b8534b71fbd20e6d5d8c"], activities: ["56b8b8534b71fbd20e6d5d96"] },
-      {number: count + 1 , hotel: "56b8b8534b71fbd20e6d5d70", restaurants: ["56b8b8534b71fbd20e6d5d87"] , activities: ["56b8b8534b71fbd20e6d5d9b"]}
+      {number: count + 1 , hotel: '56b8ea64683a700f3d164a38'},
+      {number: count + 1 , hotel: '56b8ea64683a700f3d164a36'}
       );
   })
   .then(function(data) {
