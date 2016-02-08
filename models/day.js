@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var PlaceSchema = require('./place').schema;
+
 
 
 var DaySchema = new mongoose.Schema({
